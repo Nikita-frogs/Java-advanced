@@ -5,5 +5,11 @@ public class AnimalMain {
         for (Animal animal : animals) {
             animal.speak();
         }
+
+        for (Animal animal : animals) {
+            if (animal instanceof Dog dog) {    // Instanceof is essential to avoid ClassCastException
+                dog.fetchstick();
+            }
+        }
     }
 }

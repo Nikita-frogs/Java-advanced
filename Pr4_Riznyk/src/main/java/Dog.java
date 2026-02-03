@@ -3,4 +3,8 @@ public class Dog extends Animal {
     public void speak() {
         System.out.println("The dog barks");
     }
+
+    public void fetchstick() {
+        System.out.println("The dog fetches the stick");
+    }
 }
