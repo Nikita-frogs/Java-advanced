@@ -18,7 +18,7 @@ public class EventLab {
         return result;
     }
 
-    public static List<String> getLabels(List<Event> events, Function<Event, String> mapper) {
+    public static List<String> labels(List<Event> events, Function<Event, String> mapper) {
         List<String> result = new ArrayList<>();
         for (Event e : events) {
             result.add(mapper.apply(e));

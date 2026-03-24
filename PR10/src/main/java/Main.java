@@ -16,7 +16,7 @@ public class Main {
 
         // Завдання 2: Функціональні інтерфейси
         System.out.println("--- Усі мітки ---");
-        List<String> labels = EventLab.getLabels(schedule, Event::label);
+        List<String> labels = EventLab.labels(schedule, Event::label);
         labels.forEach(System.out::println);
 
         // Предикат для ранкових подій (до 12:00 за локальним часом події)
