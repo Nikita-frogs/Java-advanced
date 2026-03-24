@@ -28,9 +28,7 @@ public class Main {
         // Композиція предикатів (Ранкова І Бекенд) АБО (НЕ Ранкова)
         Predicate<Event> complexFilter = isMorning.and(isBackend).or(isMorning.negate());
 
-        System.out.println("\n--- Відфільтровані події (складний предикат) ---");
-        List<Event> filtered = EventLab.pick(schedule, complexFilter);
-        EventLab.notifyAll(filtered, e -> System.out.println("Запрошуємо на: " + e.getTitle()));
+        LambdaRefactorLab.sortMethodRef(schedule);
 
         // Пошук конфліктів
         System.out.println();
@@ -38,7 +36,6 @@ public class Main {
 
         // Завдання 3: Сортування
         System.out.println("\n--- Сортування (Method Reference) ---");
-        LambdaRefactorLab.sortMethodRef(schedule);
         schedule.forEach(e -> System.out.println(e.getTitle() + " о " + e.getStart()));
 
         // Завдання 4: Java Time
