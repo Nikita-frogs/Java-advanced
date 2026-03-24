@@ -49,7 +49,7 @@ public class EventLab {
                 Instant endB = DateTimeLab.toInstant(b).plusSeconds(b.getDurationMinutes() * 60);
 
                 if (startA.isBefore(endB) && startB.isBefore(endA)) {
-                    System.out.println("😥Знайдено конфлікт між: " + a.label() + " та " + b.label());
+                    System.out.println("😥😥😥 Знайдено конфлікт між: " + a.label() + " та " + b.label());
                 }
             }
         }

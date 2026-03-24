@@ -32,9 +32,21 @@
               "icon": "lucide-file-text",
               "title": "Теорія_Optional_KMADistEdu"
             }
+          },
+          {
+            "id": "412305263ac811e5",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.12.4"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.12.4"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -196,7 +208,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "15ac4b5bec5bb50e",
+  "active": "412305263ac811e5",
   "lastOpenFiles": [
     "Notes/Optional.md",
     "Теорія_AbstractClasses-Interfaces_GitPR_KMADistEdu.pdf",
