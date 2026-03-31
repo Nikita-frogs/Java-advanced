@@ -1,6 +1,7 @@
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -112,5 +113,26 @@ public class Main {
                 .toList();
 
         errorMessages.forEach(System.out::println);
+
+        System.out.println("\n--- 5. Advanced collectors ---");
+        Map<Boolean, List<Book>> recentVsOld = books.stream()
+                .collect(Collectors.partitioningBy(b -> b.year() > 2015));
+
+        System.out.println("--- Результат partitioningBy (true - після 2015) ---");
+        recentVsOld.forEach((isRecent, bookList) ->
+                System.out.println(isRecent + ": " + bookList));
+
+        Map<String, Integer> productRevenueSorted = sales.stream()
+                .collect(Collectors.toMap(
+                        Sale::product,
+                        Sale::revenue,
+                        Integer::sum,
+                        TreeMap::new
+                ));
+
+        System.out.println("\n--- Виручка за продуктами (відсортовано за назвою) ---");
+        productRevenueSorted.forEach((product, total) ->
+                System.out.println(product + " : $" + total)
+        );
     }
 }
