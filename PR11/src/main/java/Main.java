@@ -82,5 +82,35 @@ public class Main {
         transactionsPerCustomer.forEach((email, count) ->
                 System.out.println(email + " : " + count + " транзакцій")
         );
+
+        System.out.println("\n--- 4. Sealed higherarchy ---");
+        List<Result> results = List.of(
+                new Success("Data uploaded"),
+                new Failure("Failed to connect to database"),
+                new Success("Data updated"),
+                new Failure("Failed to message user"),
+                new Success("Data deleted"),
+                new Failure("Max limit reached"),
+                new Success("Data sent")
+        );
+
+        Map<Boolean, Long> processedResults = results.stream()
+                .collect(Collectors.partitioningBy(
+                        result -> result instanceof Success,
+                        Collectors.counting()
+                ));
+
+        long successCount = processedResults.get(true);
+        long failureCount = processedResults.get(false);
+
+        System.out.println("Кількість успіхів: " + successCount);
+        System.out.println("Кількість помилок: " + failureCount);
+
+        List<String> errorMessages = results.stream()
+                .filter(result -> result instanceof Failure)
+                .map(result -> ((Failure) result).message())
+                .toList();
+
+        errorMessages.forEach(System.out::println);
     }
 }
