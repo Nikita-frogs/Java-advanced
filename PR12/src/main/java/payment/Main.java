@@ -1,8 +1,11 @@
 package payment;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import static payment.StatusFile.readStatus;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -42,5 +45,29 @@ public class Main {
         Path inbox = Path.of("src/practical-data/inbox");
         Path archive = Path.of("src/practical-data/archive");
         InboxArchiver.archiveTmpFiles(inbox, archive);
+
+//        Path base = Path.of("src/practical-data");
+//        Path userInput = Path.of("../secret.txt");
+//        PathSafety.safeResolve(base, userInput);
+
+        File file = new File("status.bin");
+        int nBytes = 10;
+
+        try {
+            StatusFile.createFileWithZeros(file, nBytes);
+            System.out.println("Файл створено. Розмір: " + file.length() + " байтів.");
+
+            int indexToUpdate = 4;
+            byte newStatus = 7;
+
+            StatusFile.updateStatus(file, indexToUpdate, newStatus);
+            System.out.println("Статус за індексом " + indexToUpdate + " успішно оновлено на " + newStatus);
+
+            byte readStatus = readStatus(file, indexToUpdate);
+            System.out.println("Прочитаний статус з індексу " + indexToUpdate + ": " + readStatus);
+
+        } catch (IOException e) {
+            System.err.println("Помилка вводу/виводу: " + e.getMessage());
+        }
     }
 }
