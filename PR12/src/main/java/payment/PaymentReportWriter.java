@@ -11,31 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Writes a summary report of payments to a text file using an atomic write strategy:
- * <ol>
- *   <li>Writes all content to a temp file in the <em>same directory</em> as the target.</li>
- *   <li>Atomically moves the temp file over the target with {@code REPLACE_EXISTING}.</li>
- *   <li>Falls back to a non-atomic move if the OS/FS does not support {@code ATOMIC_MOVE}.</li>
- * </ol>
- *
- * <p>Report format:
- * <pre>
- *   invalidLines=7
- *   paidTotalCents=5798
- *   NEW=1, PAID=2, FAILED=2
- * </pre>
- */
+
 public class PaymentReportWriter {
 
-    /**
-     * Generates and atomically writes the report.
-     *
-     * @param out          target report file path
-     * @param payments     list of valid payments (used for statistics)
-     * @param invalidLines number of invalid CSV lines (from {@link LoadResult})
-     * @throws IOException if writing or moving the file fails
-     */
     public void writeReport(Path out, List<Payment> payments, int invalidLines) throws IOException {
 
         // ── 1. Compute statistics ────────────────────────────────────────────
@@ -45,7 +23,6 @@ public class PaymentReportWriter {
                 .mapToLong(Payment::amountCents)
                 .sum();
 
-        // Count per status, defaulting missing statuses to 0
         Map<PaymentStatus, Long> countByStatus = payments.stream()
                 .collect(Collectors.groupingBy(Payment::status, Collectors.counting()));
 
@@ -55,7 +32,7 @@ public class PaymentReportWriter {
 
         // ── 2. Resolve the target directory ─────────────────────────────────
 
-        // out.getParent() is null when the path has no parent component (e.g. "report.txt")
+        // out.getParent() is null when the path has no parent component (e.g. "2025.txt")
         Path targetDir = out.toAbsolutePath().getParent();
         if (targetDir != null) {
             Files.createDirectories(targetDir);
@@ -64,10 +41,6 @@ public class PaymentReportWriter {
         }
 
         // ── 3. Write to a sibling temp file ─────────────────────────────────
-        //
-        // Using the same directory is crucial for ATOMIC_MOVE:
-        // an atomic rename is only possible within a single filesystem mount point.
-
         Path tmp = Files.createTempFile(targetDir, ".report-", ".tmp");
 
         try {
@@ -95,11 +68,6 @@ public class PaymentReportWriter {
 
     // ── Private helpers ──────────────────────────────────────────────────────
 
-    /**
-     * Tries an {@code ATOMIC_MOVE + REPLACE_EXISTING} first.
-     * Falls back to a plain {@code REPLACE_EXISTING} move when the OS or filesystem
-     * does not support atomic renames (e.g. cross-device moves, some network FS).
-     */
     private static void atomicMove(Path source, Path target) throws IOException {
         try {
             Files.move(source, target,
@@ -111,7 +79,6 @@ public class PaymentReportWriter {
         }
     }
 
-    /** Best-effort temp file deletion — swallows exceptions to avoid masking the real error. */
     private static void tryDelete(Path path) {
         try {
             Files.deleteIfExists(path);

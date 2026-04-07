@@ -21,26 +21,10 @@ public class PaymentLoader {
     // Public API
     // -----------------------------------------------------------------------
 
-    /**
-     * Convenience method – returns only the valid payments list.
-     * Internally delegates to {@link #loadWithStats(Path)}.
-     *
-     * @param csv path to the CSV file
-     * @return immutable list of valid {@link Payment} objects
-     * @throws IOException if the file cannot be opened or read
-     */
     public List<Payment> load(Path csv) throws IOException {
         return loadWithStats(csv).payments();
     }
 
-    /**
-     * Parses the CSV file and returns both the valid payments and the count of
-     * invalid (skipped) data rows.
-     *
-     * @param csv path to the CSV file
-     * @return {@link LoadResult} containing payments and invalidLines count
-     * @throws IOException if the file cannot be opened or read
-     */
     public LoadResult loadWithStats(Path csv) throws IOException {
         List<Payment> payments = new ArrayList<>();
         int invalidLines = 0;
@@ -79,12 +63,6 @@ public class PaymentLoader {
     // Private helpers
     // -----------------------------------------------------------------------
 
-    /**
-     * Tries to parse a single CSV data line into a {@link Payment}.
-     *
-     * @param line raw CSV line (never blank)
-     * @return parsed {@link Payment}, or {@code null} if the line is invalid
-     */
     private Payment parseLine(String line) {
         String[] parts = line.split(",", -1); // -1 keeps trailing empty tokens
 

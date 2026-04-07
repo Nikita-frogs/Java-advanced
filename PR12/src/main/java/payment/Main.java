@@ -32,11 +32,15 @@ public class Main {
         }
 
         // ── Write report ─────────────────────────────────────────────────────
-        Path reportPath = csv.toAbsolutePath().getParent().resolve("report.txt");
+        Path reportPath = csv.toAbsolutePath().getParent().resolve("2025.txt");
         new PaymentReportWriter().writeReport(reportPath, result.payments(), result.invalidLines());
 
         System.out.println();
         System.out.println("--- Report written to: " + reportPath + " ---");
         System.out.println(Files.readString(reportPath));
+
+        Path inbox = Path.of("src/practical-data/inbox");
+        Path archive = Path.of("src/practical-data/archive");
+        InboxArchiver.archiveTmpFiles(inbox, archive);
     }
 }
