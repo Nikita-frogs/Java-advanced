@@ -1,0 +1,14 @@
+id,email,status,amountCents
+1,alice@example.com,PAID,4999
+2,bob@example.com,NEW,100
+3,carol@example.com,FAILED,25000
+4,dave@example.com,PAID,799
+
+5,missing-at-sign.com,NEW,500
+6,eve@example.com,UNKNOWN_STATUS,200
+7,frank@example.com,NEW,not-a-number
+8,PAID,200
+9,grace@example.com,NEW,-500
+10,henry@example.com,NEW,0
+11,ivan@example.com,FAILED,15000
+12,,PAID,300
