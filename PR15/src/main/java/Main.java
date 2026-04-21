@@ -1,6 +1,7 @@
 import reflection_info.Book;
 import reflection_info.ClassInfoPrinter;
 import service_factory.*;
+import annotation_runner.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,5 +18,12 @@ public class Main {
 
         PaymentService cashService = (PaymentService) ServiceFactory.create(cashClassName);
         cashService.pay(300.00);
+
+        System.out.println("-----Annotation Runner-----");
+
+        SetupFlow flow = new SetupFlow();
+
+        StepRunner.run(flow);
+
     }
 }
