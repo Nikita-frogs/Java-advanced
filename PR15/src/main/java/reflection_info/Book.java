@@ -1,3 +1,5 @@
+package reflection_info;
+
 public class Book {
     private final String title;
     private final String author;
@@ -23,6 +25,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{title='%s', author='%s', pages=%d}".formatted(title, author, pages);
+        return "reflection_info.Book{title='%s', author='%s', pages=%d}".formatted(title, author, pages);
     }
 }
